@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 const path = require('path')
 
 module.exports = {
@@ -13,9 +11,9 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.jsx?$/,
-        exclude: ['node_modules'],
-        use: ['babel-loader'],
+        test: /\.js$/,
+        exclude: './node_modules',
+        use: 'babel-loader',
       },
       {
         test: /\.css$/i,
@@ -28,6 +26,10 @@ module.exports = {
     ],
   },
   resolve: {
+    alias: {
+      config$: './configs/app-config.js',
+      react: './vendor/react-master',
+    },
     extension: ['.js', '.jsx'],
     modules: [
       'node_modules',

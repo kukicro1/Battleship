@@ -1,11 +1,20 @@
-export const Ship = () => {
-  function hit(test) {
-    return test * 2
+export const Ship = (length, shipID) => {
+  let hits = 0
+  let sunk = false
+
+  function hit() {
+    hits++
+    isSunk(hits)
   }
 
-  function isSunk() {}
+  function isSunk(hits) {
+    if (length === hits) sunk = true
+    return sunk
+  }
 
   return {
+    length,
+    shipID,
     hit,
     isSunk,
   }

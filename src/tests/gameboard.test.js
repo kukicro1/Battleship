@@ -1,6 +1,7 @@
 /*global test, expect, describe, beforeEach*/
 /*eslint no-undef: "error"*/
 import { Gameboard } from '../js/gameboard'
+import { Ship } from '../js/ship'
 
 describe('Gameboard object', () => {
   let newGame
@@ -9,23 +10,33 @@ describe('Gameboard object', () => {
     newGame = Gameboard()
   })
 
-  test('Is grid okay?', () => {
-    newGame.createGrid()
+  test('Is grid 10x10?', () => {
     expect(newGame.grid.length).toBe(10)
-    expect(newGame.grid[1].length).toBe(10)
+    expect(newGame.grid[9].length).toBe(10)
   })
 
-  // test('Is ship deployed to exact position?', () => {
-  //   newGame.createGrid()
-  //   newGame.deployShip(0, 1, 'vertical')
-  //   expect(newGame.gridArray[1][0]).toEqual(2)
-  //   expect(newGame.gridArray[1]).toEqual()
-  //   expect(newGame.gridArray[1]).toEqual()
-  //   expect(newGame.gridArray[1]).toEqual()
-  //   expect(newGame.gridArray[1]).toEqual()
-  // })
-  test('Is only one ship in the field?', () => {})
-  //   test('Ship coordinates test on gameboard', () => {
-  //     expect().toBe()
-  //   })
+  test('Is ship deployed to exact position?', () => {
+    const newShip = Ship(2, '2')
+    newGame.deployShip(1, 0, 'vertical', newShip)
+    expect(newGame.grid[1][0].shipID).toBe('2')
+    expect(newGame.grid[1][1].shipID).toBe('2')
+  })
+
+  test('Is there another ship at the same position?', () => {
+    const ship1 = Ship(2, '2')
+    const ship2 = Ship(2, '2')
+    newGame.deployShip(1, 0, 'vertical', ship1)
+    expect(newGame.deployShip(1, 0, 'vertical', ship2)).toMatch(
+      'There is already a ship at this position'
+    )
+  })
+
+  test('Does ship fit on the board?', () => {
+    const ship = Ship(2, '2')
+    expect(newGame.deployShip(9, 0, 'horizontal', ship)).toMatch(
+      'Ship is out of border'
+    )
+  })
+
+  test('Is ship hit or missed?', () => {})
 })

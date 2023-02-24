@@ -1,7 +1,14 @@
 import { Ship } from './ship'
 
 export const Gameboard = () => {
-  let grid = []
+  const grid = Array.from({ length: 10 }, () =>
+    Array.from({ length: 10 }, () => ({
+      isHit: false,
+      ship: false,
+      shipID: null,
+    }))
+  )
+
   let shipArray = [
     Ship(5, '5'),
     Ship(4, '4'),
@@ -10,86 +17,60 @@ export const Gameboard = () => {
     Ship(2, '2'),
   ]
 
-  function createGrid() {
-    grid.from({ length: 10 }, () => {
-      grid.from({ length: 10 }, () => ({
-        isHit: false,
-        ship: false,
-        shipID: null,
-      }))
-    })
-    // for (let i = 0; i < 10; i++) {
-    //   for (let j = 0; j < 10; j++) {
-    //     grid.push({
-    //       x: i,
-    //       y: j,
-    //       hit: false,
-    //       ship: false,
-    //       shipID: null,
-    //     })
-    //   }
-    // }
-    // return grid
-  }
-
-  //   function deployAllShips () {
-  //     while (shipArray.length > 0) {
-  //       ship = shipArray.shift()
-  //       deployShip(x,y,orientation, ship)
-  //     }
-  //   }
-
-  function deployShip(x, y, orientation, ship = shipArray.shift()) {
+  function deployShip(x, y, orientation, ship) {
+    // Check if ship fits on grid and if field is already taken by other ship
     if (orientation === 'horizontal') {
       if (x + ship.length > 10) {
-        return deployShip(x - 1, y, orientation, ship)
+        return 'Ship is out of border'
+      }
+      for (let i = x; i < x + ship.length; i++) {
+        if (grid[i][y].ship) return 'There is already a ship at this position'
       }
     } else if (orientation === 'vertical') {
       if (y + ship.length > 10) {
-        return deployShip(x, y - 1, orientation, ship)
+        return 'Ship is out of border'
+      }
+      for (let i = y; i < y + ship.length; i++) {
+        if (grid[x][i].ship) return 'There is already a ship at this position'
       }
     }
 
-    for (let i = 0; i < grid.length; i++) {
-      if (grid[i].x === x && grid[i].y === y) {
-        if (orientation === 'vertical') {
-          for (let j = 0; j < ship.length; j++) {
-            let v = grid[i].y
-            v = v + j
-            grid.forEach((field) => {
-              if (field.x === x && field.y === v) {
-                field.ship = true
-                field.shipID = ship.shipID
-              }
-            })
-          }
-        } else if (orientation === 'horizontal') {
-          for (let j = 0; j < ship.length; j++) {
-            let h = grid[i].x
-            h = h + j
-            grid.forEach((field) => {
-              if (field.x === h && field.y === y) {
-                field.ship = true
-                field.shipID = ship.shipID
-              }
-            })
-          }
-        }
+    // Place ship on the board
+    if (orientation === 'horizontal') {
+      for (let i = x; i < x + ship.length; i++) {
+        grid[i][y].ship = true
+        grid[i][y].shipID = ship.shipID
+      }
+    } else if (orientation === 'vertical') {
+      for (let i = y; i < y + ship.length; i++) {
+        grid[x][i].ship = true
+        grid[x][i].shipID = ship.shipID
       }
     }
     return grid
   }
 
-  function receiveAttack() {}
+  function receiveAttack(x, y) {
+    // If ship is missed
+    if (grid[x][y].isHit === false && grid[x][y].ship === false) {
+      grid[x][y].isHit = true
+      return 'You missed'
+    }
+    // If ship is hit
+    else if (grid[x][y].isHit === false && grid[x][y].ship === true) {
+      grid[x][y].isHit = true
+      Ship.hit()
+      return 'Boom!'
+    }
+    // If water or ship were already hit
+    else return
+  }
 
-  function missedAttacks() {}
-
-  function whoWon() {}
+  function shipsSunk() {}
 
   return {
     grid,
     deployShip,
-    createGrid,
     receiveAttack,
   }
 }

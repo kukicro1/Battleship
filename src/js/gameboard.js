@@ -9,13 +9,7 @@ export const Gameboard = () => {
     }))
   )
 
-  let shipArray = [
-    Ship(5, '5'),
-    Ship(4, '4'),
-    Ship(3, '3'),
-    Ship(3, '3'),
-    Ship(2, '2'),
-  ]
+  let ships = []
 
   function deployShip(x, y, orientation, ship) {
     // Check if ship fits on grid and if field is already taken by other ship
@@ -47,6 +41,7 @@ export const Gameboard = () => {
         grid[x][i].shipID = ship.shipID
       }
     }
+    ships.push(ship)
     return grid
   }
 
@@ -66,11 +61,19 @@ export const Gameboard = () => {
     else return
   }
 
-  function shipsSunk() {}
+  function allShipsSunk() {
+    let shipsLeft = ships.length
+    ships.forEach((ship) => {
+      if (ship.isSunk() === true) shipsLeft--
+    })
+    if (shipsLeft === 0) return true
+    else return false
+  }
 
   return {
     grid,
     deployShip,
     receiveAttack,
+    allShipsSunk,
   }
 }

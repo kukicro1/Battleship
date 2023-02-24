@@ -38,5 +38,22 @@ describe('Gameboard object', () => {
     )
   })
 
-  test('Is ship hit or missed?', () => {})
+  test('Is ship hit or missed?', () => {
+    const ship = Ship(2, '2')
+    newGame.deployShip(1, 0, 'vertical', ship)
+    newGame.receiveAttack(1, 1, ship)
+    expect(newGame.grid[1][0].isHit).toBe(false)
+    expect(newGame.grid[1][1].isHit).toBe(true)
+    newGame.receiveAttack(1, 1, ship)
+    expect(newGame.grid[1][1].isHit).toBe(true)
+  })
+
+  test('Is ship sunk?', () => {
+    const ship = Ship(2, '2')
+    newGame.deployShip(1, 0, 'vertical', ship)
+    newGame.receiveAttack(1, 0, ship)
+    expect(ship.isSunk()).toBe(false)
+    newGame.receiveAttack(1, 1, ship)
+    expect(ship.isSunk()).toBe(true)
+  })
 })

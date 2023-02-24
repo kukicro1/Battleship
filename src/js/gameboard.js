@@ -50,7 +50,7 @@ export const Gameboard = () => {
     return grid
   }
 
-  function receiveAttack(x, y) {
+  function receiveAttack(x, y, ship) {
     // If ship is missed
     if (grid[x][y].isHit === false && grid[x][y].ship === false) {
       grid[x][y].isHit = true
@@ -59,7 +59,7 @@ export const Gameboard = () => {
     // If ship is hit
     else if (grid[x][y].isHit === false && grid[x][y].ship === true) {
       grid[x][y].isHit = true
-      Ship.hit()
+      ship.hit()
       return 'Boom!'
     }
     // If water or ship were already hit

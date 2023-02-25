@@ -10,11 +10,11 @@ module.exports = {
   devtool: 'inline-source-map',
   module: {
     rules: [
-      {
-        test: /\.js$/,
-        exclude: './node_modules',
-        use: 'babel-loader',
-      },
+      // {
+      // test: /\.js$/,
+      // exclude: './node_modules',
+      // use: 'babel-loader',
+      // },
       {
         test: /\.css$/i,
         use: ['style-loader', 'css-loader'],
@@ -30,7 +30,7 @@ module.exports = {
       config$: './configs/app-config.js',
       react: './vendor/react-master',
     },
-    extension: ['.js', '.jsx'],
+    // extension: ['.js', '.jsx'],
     modules: [
       'node_modules',
       'bower_components',

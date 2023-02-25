@@ -10,3 +10,4 @@ package.json
 .gitignore
 webpack.config.js
 /.vscode
+/coverage

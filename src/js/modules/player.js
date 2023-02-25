@@ -1,5 +1,14 @@
 export const Player = (name, gameboard) => {
   const isComputer = name === 'Computer'
+  let turn = false
+
+  function currentTurn() {
+    return turn
+  }
+
+  function changeTurn() {
+    if (turn === false) return (turn = true)
+  }
 
   function attack(x, y) {
     if (isComputer) {
@@ -22,6 +31,8 @@ export const Player = (name, gameboard) => {
 
   return {
     name,
+    currentTurn,
+    changeTurn,
     attack,
   }
 }

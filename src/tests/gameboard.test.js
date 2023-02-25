@@ -1,7 +1,7 @@
 /*global test, expect, describe, beforeEach*/
 /*eslint no-undef: "error"*/
-import { Gameboard } from '../js/gameboard'
-import { Ship } from '../js/ship'
+import { Gameboard } from '../js/modules/gameboard'
+import { Ship } from '../js/modules/ship'
 
 describe('Gameboard object', () => {
   let newGame

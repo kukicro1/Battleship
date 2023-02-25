@@ -1,5 +1,7 @@
 import '../css/reset.css'
 import '../css/styles.css'
-import { Gameboard } from './gameboard'
-import { Player } from './player'
-import { Ship } from './ship'
+import { Dom } from './dom/dom'
+import { GameLoop } from './modules/gameLoop'
+
+GameLoop
+Dom()

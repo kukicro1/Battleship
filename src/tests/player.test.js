@@ -1,8 +1,8 @@
 /*global test, expect, describe, beforeEach, jest*/
 /*eslint no-undef: "error"*/
 
-import { Gameboard } from '../js/gameboard'
-import { Player } from '../js/player'
+import { Gameboard } from '../js/modules/gameboard'
+import { Player } from '../js/modules/player'
 
 describe('Player object', () => {
   let gameboard

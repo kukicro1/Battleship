@@ -1,7 +1,7 @@
 /*global test, expect, describe*/
 /*eslint no-undef: "error"*/
 
-import { Ship } from '../js/ship'
+import { Ship } from '../js/modules/ship'
 
 describe('Ship object', () => {
   test('Is ship object with properties length, shipID, hit and sunk?', () => {

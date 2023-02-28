@@ -1,13 +1,13 @@
 export const Player = (name, gameboard) => {
   const isComputer = name === 'Computer'
-  let turn = false
+  let turn = true
 
   function currentTurn() {
     return turn
   }
 
   function changeTurn() {
-    if (turn === false) return (turn = true)
+    turn = !turn
   }
 
   function attack(x, y) {

@@ -4,4 +4,3 @@ import { Dom } from './dom/dom'
 import { GameLoop } from './modules/gameLoop'
 
 GameLoop
-Dom()

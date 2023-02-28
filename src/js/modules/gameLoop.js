@@ -3,7 +3,7 @@ import { Gameboard } from './gameboard'
 import { Player } from './player'
 import { Ships } from './shipObjects'
 
-export const GameLoop = (() => {
+export const GameLoop = ((x, y) => {
   const humanBoard = Gameboard()
   const computerBoard = Gameboard()
 
@@ -27,25 +27,42 @@ export const GameLoop = (() => {
   computerBoard.deployShip(5, 3, 'horizontal', computerShips.shift())
   computerBoard.deployShip(0, 9, 'horizontal', computerShips.shift())
 
-  //   while (!humanBoard.allShipsSunk() || !computerBoard.allShipsSunk()) {
-  //     if (human.currentTurn()) {
-  //       // Needed dom to place x and y coordinates in attack function
-  //       human.attack()
-  //       if (computerBoard.allShipsSunk()) {
-  //         // Human won!
-  //         // Show winner with dom!
-  //         // Restart game
-  //       }
-  //     } else if (computer.currentTurn()) {
-  //       // Needed dom to place x and y coordinates in attack function
-  //       computer.attack()
-  //       if (humanBoard.allShipsSunk()) {
-  //         // Computer Won!
-  //         // Show winner with dom!
-  //         // Restart game
-  //       }
-  //     }
-  //   }
+  Dom.showHumanShips(humanBoard.grid)
+
+  while (!humanBoard.allShipsSunk() || !computerBoard.allShipsSunk()) {
+    if (human.currentTurn()) {
+      human.changeTurn()
+      computer.changeTurn()
+      console.log('human')
+      let arr = Dom.showHitOnComputerGrid(computerBoard.grid)
+      console.log(arr[0])
+      console.log(arr[1])
+      console.log('not human turn anymore')
+
+      human.attack(x, y)
+
+      if (computerBoard.allShipsSunk()) {
+        // Human won!
+        // Show winner with dom!
+        // Restart game
+
+        return console.log('Human won!')
+      }
+    } else if (computer.currentTurn()) {
+      computer.changeTurn()
+      human.changeTurn()
+      computer.attack()
+      console.log('computer')
+      if (humanBoard.allShipsSunk()) {
+        // Computer Won!
+        // Show winner with dom!
+        // Restart game
+
+        return console.log('Computer won!')
+      }
+    }
+  }
+  console.log('end')
 
   // End of game, call this function again to start new game!
   return {

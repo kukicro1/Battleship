@@ -73,25 +73,11 @@ export const Dom = (() => {
     modalContainer.classList = 'modalContainer'
   }
 
-  function restartGame(newGame) {
-    restartButton.addEventListener('click', () => {
-      humanGrid.forEach((cell) => {
-        cell.classList = 'humanCell'
-      })
-      computerGrid.forEach((cell) => {
-        cell.classList = 'computerCell'
-      })
-      modalContainer.classList.add('hide')
-      newGame()
-    })
-  }
-
   return {
     showHumanShips,
     showHitOnHumanGrid,
     showHitOnComputerGrid,
     humanWon,
     computerWon,
-    restartGame,
   }
 })()

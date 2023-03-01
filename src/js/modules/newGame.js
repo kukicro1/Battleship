@@ -1,6 +1,6 @@
 import { GameLoop } from './gameLoop'
 
-export const newGame = (() => {
+export const NewGame = (() => {
   const humanGrid = document.querySelectorAll('.humanCell')
   const computerGrid = document.querySelectorAll('.computerCell')
   const modalContainer = document.querySelector('.modalContainer')

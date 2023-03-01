@@ -1,6 +1,9 @@
 export const Dom = (() => {
   const humanGrid = document.querySelectorAll('.humanCell')
   const computerGrid = document.querySelectorAll('.computerCell')
+  const winningMessage = document.querySelector('.whoWonTitle')
+  const modalContainer = document.querySelector('.modalContainer')
+  const restartButton = document.querySelector('.restart')
 
   humanGrid.forEach((cell, index) => {
     cell.dataset.index = index
@@ -28,42 +31,67 @@ export const Dom = (() => {
       let x = index % 10
       let y = Math.floor(index / 10)
       let field = humanBoard[x][y]
-      if (field.ship && field.isHit === false) {
+      if (field.ship && field.isHit === true) {
         cell.classList.add('hit')
-      } else if (!field.ship && field.isHit === false) {
+      } else if (!field.ship && field.isHit === true) {
         cell.classList.add('miss')
       }
     })
   }
 
   function showHitOnComputerGrid(computerBoard) {
-    let x = null
-    let y = null
-    function handleClick(e) {
-      let index = e.target.dataset.index
-      x = index % 10
-      y = Math.floor(index / 10)
-      let field = computerBoard[x][y]
-      if (field.ship && field.isHit === false) {
-        e.target.classList.add('hit')
-      } else if (!field.ship && field.isHit === false) {
-        e.target.classList.add('miss')
+    return new Promise((resolve) => {
+      function handleClick(e) {
+        let index = e.target.dataset.index
+        const x = index % 10
+        const y = Math.floor(index / 10)
+        let field = computerBoard[x][y]
+        if (field.ship && field.isHit === false) {
+          e.target.classList.add('hit')
+        } else if (!field.ship && field.isHit === false) {
+          e.target.classList.add('miss')
+        }
+        computerGrid.forEach((cell) =>
+          cell.removeEventListener('click', handleClick, { once: true })
+        )
+        resolve([x, y])
       }
+
       computerGrid.forEach((cell) =>
-        cell.removeEventListener('click', handleClick)
+        cell.addEventListener('click', handleClick, { once: true })
       )
-      console.log([x, y])
-      return [x, y]
-    }
-    computerGrid.forEach((cell) => cell.addEventListener('click', handleClick))
+    })
   }
 
-  function showWinner() {}
-  function restartGame() {}
+  function humanWon() {
+    winningMessage.textContent = 'You Won!!!'
+    modalContainer.classList = 'modalContainer'
+  }
+
+  function computerWon() {
+    winningMessage.textContent = 'Computer Won!!!'
+    modalContainer.classList = 'modalContainer'
+  }
+
+  function restartGame(newGame) {
+    restartButton.addEventListener('click', () => {
+      humanGrid.forEach((cell) => {
+        cell.classList = 'humanCell'
+      })
+      computerGrid.forEach((cell) => {
+        cell.classList = 'computerCell'
+      })
+      modalContainer.classList.add('hide')
+      newGame()
+    })
+  }
 
   return {
     showHumanShips,
     showHitOnHumanGrid,
     showHitOnComputerGrid,
+    humanWon,
+    computerWon,
+    restartGame,
   }
 })()

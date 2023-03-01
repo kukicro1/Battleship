@@ -116,11 +116,13 @@ body {
 .hit,
 .hit:hover {
   background-color: rgb(255, 120, 120);
+  pointer-events: none;
 }
 
 .miss,
 .miss:hover {
   background-color: rgb(140, 255, 140);
+  pointer-events: none;
 }
 
 .modalContainer {

@@ -12,10 +12,16 @@ export const Ship = (length, shipID) => {
     return sunk
   }
 
+  function resetShip() {
+    hits = 0
+    sunk = false
+  }
+
   return {
     length,
     shipID,
     hit,
     isSunk,
+    resetShip,
   }
 }

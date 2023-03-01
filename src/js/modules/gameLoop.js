@@ -3,15 +3,15 @@ import { Gameboard } from './gameboard'
 import { Player } from './player'
 import { Ships } from './shipObjects'
 
-export const GameLoop = ((x, y) => {
+export const GameLoop = async () => {
   const humanBoard = Gameboard()
   const computerBoard = Gameboard()
 
   const human = Player('Human', computerBoard)
   const computer = Player('Computer', humanBoard)
 
-  let humanShips = Ships.humanShips
-  let computerShips = Ships.computerShips
+  let humanShips = [...Ships.humanShips]
+  let computerShips = [...Ships.computerShips]
 
   // Add logic to set x and y coordinates with dom by drag and drop, or by click
   humanBoard.deployShip(0, 0, 'horizontal', humanShips.shift())
@@ -29,46 +29,37 @@ export const GameLoop = ((x, y) => {
 
   Dom.showHumanShips(humanBoard.grid)
 
-  while (!humanBoard.allShipsSunk() || !computerBoard.allShipsSunk()) {
+  while (!humanBoard.allShipsSunk() && !computerBoard.allShipsSunk()) {
     if (human.currentTurn()) {
       human.changeTurn()
       computer.changeTurn()
-      console.log('human')
-      let arr = Dom.showHitOnComputerGrid(computerBoard.grid)
-      console.log(arr[0])
-      console.log(arr[1])
-      console.log('not human turn anymore')
-
+      let [x, y] = await Dom.showHitOnComputerGrid(computerBoard.grid)
       human.attack(x, y)
-
+      if (computer.currentTurn() === false) computer.changeTurn()
       if (computerBoard.allShipsSunk()) {
-        // Human won!
-        // Show winner with dom!
-        // Restart game
-
-        return console.log('Human won!')
+        Dom.humanWon()
+        break
       }
     } else if (computer.currentTurn()) {
       computer.changeTurn()
       human.changeTurn()
       computer.attack()
-      console.log('computer')
+      Dom.showHitOnHumanGrid(humanBoard.grid)
       if (humanBoard.allShipsSunk()) {
-        // Computer Won!
-        // Show winner with dom!
-        // Restart game
-
-        return console.log('Computer won!')
+        Dom.computerWon()
+        break
       }
     }
   }
-  console.log('end')
 
-  // End of game, call this function again to start new game!
+  Ships.resetShips()
+  humanBoard.reset()
+  computerBoard.reset()
+
   return {
     humanBoard,
     computerBoard,
     human,
     computer,
   }
-})()
+}

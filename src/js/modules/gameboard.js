@@ -1,5 +1,5 @@
 export const Gameboard = () => {
-  const grid = Array.from({ length: 10 }, () =>
+  let grid = Array.from({ length: 10 }, () =>
     Array.from({ length: 10 }, () => ({
       isHit: false,
       ship: null,
@@ -62,10 +62,22 @@ export const Gameboard = () => {
     return true
   }
 
+  function reset() {
+    grid = []
+    // for (let i = 0; i < grid.length; i++) {
+    //   for (let j = 0; j < grid[i].length; j++) {
+    //     grid[i][j].isHit = false
+    //     grid[i][j].ship = null
+    //     grid[i][j].shipID = null
+    //   }
+    // }
+  }
+
   return {
     grid,
     deployShip,
     receiveAttack,
     allShipsSunk,
+    reset,
   }
 }

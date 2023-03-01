@@ -17,8 +17,18 @@ export const Ships = (() => {
     Ship(5, '5'),
   ]
 
+  function resetShips() {
+    humanShips.forEach((ship) => {
+      ship.resetShip()
+    })
+    computerShips.forEach((ship) => {
+      ship.resetShip()
+    })
+  }
+
   return {
     humanShips,
     computerShips,
+    resetShips,
   }
 })()

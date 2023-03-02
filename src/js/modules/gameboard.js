@@ -7,21 +7,32 @@ export const Gameboard = () => {
     }))
   )
 
+  function deployComputerFleet(array) {
+    while (array.length > 0) {
+      let firstElement = array.shift()
+      let direction = ''
+      let x = Math.floor(Math.random() * 10)
+      let y = Math.floor(Math.random() * 10)
+      x > 4 ? (direction = 'horizontal') : (direction = 'vertical')
+      while (deployShip(x, y, direction, firstElement) === false) {
+        x = Math.floor(Math.random() * 10)
+        y = Math.floor(Math.random() * 10)
+        x > 4 ? (direction = 'horizontal') : (direction = 'vertical')
+      }
+    }
+  }
+
   function deployShip(x, y, direction, ship) {
     // Check if ship fits on grid and if field is already taken by other ship
     if (direction === 'horizontal') {
-      if (x + ship.length > 10) {
-        return 'Ship is out of border'
-      }
+      if (x + ship.length > 10) return false
       for (let i = x; i < x + ship.length; i++) {
-        if (grid[i][y].ship) return 'There is already a ship at this position'
+        if (grid[i][y].ship) return false
       }
     } else if (direction === 'vertical') {
-      if (y + ship.length > 10) {
-        return 'Ship is out of border'
-      }
+      if (y + ship.length > 10) return false
       for (let i = y; i < y + ship.length; i++) {
-        if (grid[x][i].ship) return 'There is already a ship at this position'
+        if (grid[x][i].ship) return false
       }
     }
     // Place ship on the board
@@ -79,5 +90,6 @@ export const Gameboard = () => {
     receiveAttack,
     allShipsSunk,
     reset,
+    deployComputerFleet,
   }
 }

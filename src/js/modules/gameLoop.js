@@ -20,12 +20,7 @@ export const GameLoop = async () => {
   humanBoard.deployShip(5, 3, 'horizontal', humanShips.shift())
   humanBoard.deployShip(0, 9, 'horizontal', humanShips.shift())
 
-  // Add logic for computer to set x and y by random parameter
-  computerBoard.deployShip(0, 0, 'horizontal', computerShips.shift())
-  computerBoard.deployShip(4, 0, 'horizontal', computerShips.shift())
-  computerBoard.deployShip(1, 1, 'horizontal', computerShips.shift())
-  computerBoard.deployShip(5, 3, 'horizontal', computerShips.shift())
-  computerBoard.deployShip(0, 9, 'horizontal', computerShips.shift())
+  computerBoard.deployComputerFleet(computerShips)
 
   Dom.showHumanShips(humanBoard.grid)
 

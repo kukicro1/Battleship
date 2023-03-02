@@ -3,7 +3,6 @@ export const Dom = (() => {
   const computerGrid = document.querySelectorAll('.computerCell')
   const winningMessage = document.querySelector('.whoWonTitle')
   const modalContainer = document.querySelector('.modalContainer')
-  const restartButton = document.querySelector('.restart')
 
   humanGrid.forEach((cell, index) => {
     cell.dataset.index = index

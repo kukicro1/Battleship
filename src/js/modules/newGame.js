@@ -18,6 +18,7 @@ export const NewGame = (() => {
       GameLoop()
     })
   }
+
   return {
     restartGame,
   }

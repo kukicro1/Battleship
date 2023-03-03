@@ -10,19 +10,19 @@ export const Player = (name, gameboard) => {
     turn = !turn
   }
 
-  function attack(x, y) {
+  function attack(row, col) {
     if (isComputer) {
-      x = Math.floor(Math.random() * 10)
-      y = Math.floor(Math.random() * 10)
+      row = Math.floor(Math.random() * 10)
+      col = Math.floor(Math.random() * 10)
     }
-    let isLegal = isValidAttack(x, y)
+    let isLegal = isValidAttack(row, col)
     if (!isLegal) {
       return attack()
-    } else return gameboard.receiveAttack(x, y)
+    } else return gameboard.receiveAttack(row, col)
   }
 
-  function isValidAttack(x, y) {
-    let field = gameboard.grid[x][y]
+  function isValidAttack(row, col) {
+    let field = gameboard.grid[row][col]
     if (field.isHit) {
       return false
     }

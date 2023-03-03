@@ -1,4 +1,5 @@
 import { Dom } from '../dom/dom'
+import { DeployHumanShips } from './DeployHumanShips'
 import { Gameboard } from './gameboard'
 import { Player } from './player'
 import { Ships } from './shipObjects'
@@ -14,22 +15,25 @@ export const GameLoop = async () => {
   let computerShips = [...Ships.computerShips]
 
   // Add logic to set x and y coordinates with dom by drag and drop, or by click
+  // Add promise DeployHumanShips?
+  // await DeployHumanShips(humanShips, humanBoard)
+
   humanBoard.deployShip(0, 0, 'horizontal', humanShips.shift())
-  humanBoard.deployShip(4, 0, 'horizontal', humanShips.shift())
+  humanBoard.deployShip(0, 4, 'horizontal', humanShips.shift())
   humanBoard.deployShip(1, 1, 'horizontal', humanShips.shift())
-  humanBoard.deployShip(5, 3, 'horizontal', humanShips.shift())
-  humanBoard.deployShip(0, 9, 'horizontal', humanShips.shift())
+  humanBoard.deployShip(3, 5, 'horizontal', humanShips.shift())
+  humanBoard.deployShip(9, 0, 'horizontal', humanShips.shift())
 
-  computerBoard.deployComputerFleet(computerShips)
-
+  console.log(humanBoard.grid)
   Dom.showHumanShips(humanBoard.grid)
+  computerBoard.deployComputerFleet(computerShips)
 
   while (!humanBoard.allShipsSunk() && !computerBoard.allShipsSunk()) {
     if (human.currentTurn()) {
       human.changeTurn()
       computer.changeTurn()
-      let [x, y] = await Dom.showHitOnComputerGrid(computerBoard.grid)
-      human.attack(x, y)
+      let [row, col] = await Dom.showHitOnComputerGrid(computerBoard.grid)
+      human.attack(row, col)
       if (computer.currentTurn() === false) computer.changeTurn()
       if (computerBoard.allShipsSunk()) {
         Dom.humanWon()

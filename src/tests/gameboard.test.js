@@ -8,12 +8,14 @@ describe('Gameboard object', () => {
   let ship
   let ship1
   let ship2
+  let bigShip
 
   beforeEach(() => {
     newGame = Gameboard()
     ship = Ship(2, '2')
     ship1 = Ship(2, '2')
     ship2 = Ship(2, '2')
+    bigShip = Ship(5, '5')
   })
 
   test('Is grid 10x10?', () => {
@@ -22,22 +24,21 @@ describe('Gameboard object', () => {
   })
 
   test('Is ship deployed to exact position?', () => {
-    newGame.deployShip(1, 0, 'vertical', ship)
-    expect(newGame.grid[1][0].ship).toBe(ship)
-    expect(newGame.grid[1][1].ship).toBe(ship)
+    newGame.deployShip(1, 0, 'vertical', bigShip)
+    expect(newGame.grid[1][0].ship).toBe(bigShip)
+    expect(newGame.grid[2][0].ship).toBe(bigShip)
+    expect(newGame.grid[3][0].ship).toBe(bigShip)
+    expect(newGame.grid[4][0].ship).toBe(bigShip)
+    expect(newGame.grid[5][0].ship).toBe(bigShip)
   })
 
   test('Is there another ship at the same position?', () => {
     newGame.deployShip(1, 0, 'vertical', ship1)
-    expect(newGame.deployShip(1, 0, 'vertical', ship2)).toMatch(
-      'There is already a ship at this position'
-    )
+    expect(newGame.deployShip(1, 0, 'vertical', ship2)).toBe(false)
   })
 
   test('Does ship fit on the board?', () => {
-    expect(newGame.deployShip(9, 0, 'horizontal', ship)).toMatch(
-      'Ship is out of border'
-    )
+    expect(newGame.deployShip(9, 0, 'vertical', ship)).toBe(false)
   })
 
   test('Is ship hit or missed?', () => {
@@ -51,7 +52,7 @@ describe('Gameboard object', () => {
     newGame.deployShip(1, 0, 'vertical', ship)
     newGame.receiveAttack(1, 0, ship)
     expect(ship.isSunk()).toBe(false)
-    newGame.receiveAttack(1, 1, ship)
+    newGame.receiveAttack(2, 0, ship)
     expect(ship.isSunk()).toBe(true)
   })
 
@@ -59,11 +60,11 @@ describe('Gameboard object', () => {
     newGame.deployShip(1, 0, 'vertical', ship1)
     newGame.deployShip(4, 4, 'vertical', ship2)
     newGame.receiveAttack(1, 0)
-    newGame.receiveAttack(1, 1)
+    newGame.receiveAttack(2, 0)
     expect(ship1.isSunk()).toBe(true)
     expect(newGame.allShipsSunk()).toBe(false)
     newGame.receiveAttack(4, 4)
-    newGame.receiveAttack(4, 5)
+    newGame.receiveAttack(5, 4)
     expect(ship2.isSunk()).toBe(true)
     expect(newGame.allShipsSunk()).toBe(true)
   })

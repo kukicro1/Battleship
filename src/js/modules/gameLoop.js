@@ -16,16 +16,16 @@ export const GameLoop = async () => {
 
   // Add logic to set x and y coordinates with dom by drag and drop, or by click
   // Add promise DeployHumanShips?
-  // await DeployHumanShips(humanShips, humanBoard)
+  await DeployHumanShips(humanShips, humanBoard)
+  // humanBoard.deployShip(0, 0, 'horizontal', humanShips.shift())
+  // humanBoard.deployShip(0, 4, 'horizontal', humanShips.shift())
+  // humanBoard.deployShip(1, 1, 'horizontal', humanShips.shift())
+  // humanBoard.deployShip(3, 5, 'horizontal', humanShips.shift())
+  // humanBoard.deployShip(9, 0, 'horizontal', humanShips.shift())
+  console.log('game starts')
 
-  humanBoard.deployShip(0, 0, 'horizontal', humanShips.shift())
-  humanBoard.deployShip(0, 4, 'horizontal', humanShips.shift())
-  humanBoard.deployShip(1, 1, 'horizontal', humanShips.shift())
-  humanBoard.deployShip(3, 5, 'horizontal', humanShips.shift())
-  humanBoard.deployShip(9, 0, 'horizontal', humanShips.shift())
-
-  console.log(humanBoard.grid)
-  Dom.showHumanShips(humanBoard.grid)
+  // console.log(humanBoard.grid)
+  // Dom.showHumanShips(humanBoard.grid)
   computerBoard.deployComputerFleet(computerShips)
 
   while (!humanBoard.allShipsSunk() && !computerBoard.allShipsSunk()) {

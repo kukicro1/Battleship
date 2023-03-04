@@ -119,6 +119,15 @@ body {
   pointer-events: none;
 }
 
+.deployable{
+  background-color: rgb(140, 255, 140);
+}
+
+.undeployable{
+  background-color: rgb(255, 120, 120);
+  cursor: not-allowed;
+}
+
 .miss,
 .miss:hover {
   background-color: rgb(140, 255, 140);

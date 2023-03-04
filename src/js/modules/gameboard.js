@@ -9,6 +9,8 @@ export const Gameboard = () => {
 
 
   function deployShip(row, col, direction, ship) {
+    console.log('humanBoard:', this)
+    console.log('grid:', this.grid)
     // Check if ship fits on grid and if field is already taken by other ship
     if (direction === 'horizontal') {
       if (col + ship.length > 10) return false
@@ -18,6 +20,7 @@ export const Gameboard = () => {
     } else if (direction === 'vertical') {
       if (row + ship.length > 10) return false
       for (let i = row; i < row + ship.length; i++) {
+        console.log(grid)
         if (grid[i][col].ship) return false
       }
     }
